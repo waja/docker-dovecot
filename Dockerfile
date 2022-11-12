@@ -22,7 +22,9 @@ LABEL maintainer="Jan Wagner <waja@cyconet.org>" \
     org.opencontainers.image.source="https://github.com/waja/docker-dovecot"
 
 # hadolint ignore=DL3017,DL3018
-RUN apk --no-cache update && apk --no-cache upgrade && \
+# Disable Dovecot TLS during installation to prevent key from being pregenerated
+RUN mkdir -p /etc/dovecot && echo "ssl = no" > /etc/dovecot/local.conf && \
+    apk --no-cache update && apk --no-cache upgrade && \
     # Install needed packages
     apk add --update --no-cache \
         dovecot=$DOVECOT_PACKAGE_VERSION \
@@ -31,13 +33,18 @@ RUN apk --no-cache update && apk --no-cache upgrade && \
         dovecot-pop3d=$DOVECOT_PACKAGE_VERSION \
         dovecot-sqlite=$DOVECOT_PACKAGE_VERSION \
         socat=$SOCAT_PACKAGE_VERSION && \
+    rm /etc/dovecot/local.conf && \
     find /var/cache/apk /tmp -mindepth 1 -delete && \
     # create needed directories
-    mkdir -p /run/dovecot/ #&& \
+    mkdir -p /run/dovecot/ && \
+    echo -e "log_path = /dev/stderr\ninfo_log_path = /dev/stdout\ndebug_log_path = /dev/stdout" > /etc/dovecot/conf.d/95-local-log.conf
     # forward request and error logs to docker log collector
     # See https://github.com/moby/moby/issues/19616
     #ln -sf /proc/1/fd/1 /var/log/dovecot/access.log && \
     #ln -sf /proc/1/fd/1 /var/log/dovecot/error.log
+
+# Add wrapper script that will generate the TLS configuration on startup
+COPY rootfs /
 
 #   24: LMTP
 #  110: POP3 (StartTLS)
@@ -49,4 +56,4 @@ EXPOSE 24 110 143 993 995 4190
 
 STOPSIGNAL SIGTERM
 
-CMD ["dovecot", "-F"]
+CMD ["/usr/local/bin/dovecot-wrapper"]
