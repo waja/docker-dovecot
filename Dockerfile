@@ -37,7 +37,7 @@ RUN mkdir -p /etc/dovecot && echo "ssl = no" > /etc/dovecot/local.conf && \
     find /var/cache/apk /tmp -mindepth 1 -delete && \
     # create needed directories
     mkdir -p /run/dovecot/ && \
-    echo -e "log_path = /dev/stderr\ninfo_log_path = /dev/stdout\ndebug_log_path = /dev/stdout" > /etc/dovecot/conf.d/95-local-log.conf
+    printf "log_path = /dev/stderr\ninfo_log_path = /dev/stdout\ndebug_log_path = /dev/stdout" > /etc/dovecot/conf.d/95-local-log.conf
     # forward request and error logs to docker log collector
     # See https://github.com/moby/moby/issues/19616
     #ln -sf /proc/1/fd/1 /var/log/dovecot/access.log && \
