@@ -56,4 +56,6 @@ EXPOSE 24 110 143 993 995 4190
 
 STOPSIGNAL SIGTERM
 
-CMD ["/usr/local/bin/dovecot-wrapper"]
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+CMD ["dovecot", "-F"]
