@@ -144,7 +144,7 @@ jobs:
         run: |
           CONTAINER_OUTPUT=$(docker run --rm -t localhost:5000/foobar/${{ env.IMAGE_NAME }} dovecot --help 2>&1)
           # shellcheck disable=SC2086
-          TEST_STRING=$(echo ${CONTAINER_OUTPUT} | head -1 | cut -d' ' -f2)
+          TEST_STRING=$(echo ${CONTAINER_OUTPUT} | grep ^Usage: | cut -d' ' -f2)
           if ! [ "${TEST_STRING}" = "dovecot" ]; then exit 1; fi
 #      - name: Scan image with Container Scan
 #        uses: Azure/container-scan@v0
