@@ -1,7 +1,7 @@
 #!/bin/sh
 
 DIR=/docker-entrypoint.d
-if [[ -d "$DIR" ]]; then
+if [ -d "$DIR" ]; then
   /bin/run-parts "$DIR"
 fi
 
