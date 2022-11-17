@@ -1,3 +1,4 @@
+# syntax = docker/dockerfile:1.4.3
 FROM alpine:3.16.3
 
 ARG BUILD_DATE
@@ -22,8 +23,10 @@ LABEL maintainer="Jan Wagner <waja@cyconet.org>" \
     org.opencontainers.image.source="https://github.com/waja/docker-dovecot"
 
 # hadolint ignore=DL3017,DL3018
-# Disable Dovecot TLS during installation to prevent key from being pregenerated
-RUN mkdir -p /etc/dovecot && echo "ssl = no" > /etc/dovecot/local.conf && \
+RUN --mount=type=cache,target=/var/log \
+    --mount=type=cache,target=/var/cache \
+    # Disable Dovecot TLS during installation to prevent key from being pregenerated
+    mkdir -p /etc/dovecot && echo "ssl = no" > /etc/dovecot/local.conf && \
     apk --no-cache update && apk --no-cache upgrade && \
     # Install needed packages
     apk add --update --no-cache \
