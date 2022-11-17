@@ -25,9 +25,10 @@ LABEL maintainer="Jan Wagner <waja@cyconet.org>" \
 # hadolint ignore=DL3017,DL3018
 RUN --mount=type=cache,target=/var/log \
     --mount=type=cache,target=/var/cache \
+    <<EOF
     # Disable Dovecot TLS during installation to prevent key from being pregenerated
-    mkdir -p /etc/dovecot && echo "ssl = no" > /etc/dovecot/local.conf && \
-    apk --no-cache update && apk --no-cache upgrade && \
+    mkdir -p /etc/dovecot && echo "ssl = no" > /etc/dovecot/local.conf
+    apk --no-cache update && apk --no-cache upgrade
     # Install needed packages
     apk add --update --no-cache \
         dovecot=$DOVECOT_PACKAGE_VERSION \
@@ -35,11 +36,14 @@ RUN --mount=type=cache,target=/var/log \
         dovecot-pigeonhole-plugin=$DOVECOT_PACKAGE_VERSION \
         dovecot-pop3d=$DOVECOT_PACKAGE_VERSION \
         dovecot-sqlite=$DOVECOT_PACKAGE_VERSION \
-        socat=$SOCAT_PACKAGE_VERSION && \
-    rm /etc/dovecot/local.conf && \
-    find /var/cache/apk /tmp -mindepth 1 -delete && \
+       socat=$SOCAT_PACKAGE_VERSION
+    # remove (possible) shipped dovecot local config
+    rm -f /etc/dovecot/local.conf
+    # this shouldn't needed, cause we cache /var/cache
+    find /var/cache/apk /tmp -mindepth 1 -delete
     # create needed directories
     mkdir -p /run/dovecot/
+EOF
 
 # Add wrapper script that will generate the TLS configuration on startup
 COPY rootfs /
