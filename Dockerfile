@@ -1,4 +1,5 @@
-# syntax = docker/dockerfile:1.4.3
+# syntax = docker/dockerfile:1
+# requires DOCKER_BUILDKIT=1 set when running docker build
 FROM alpine:3.16.3
 
 ARG BUILD_DATE
@@ -25,6 +26,7 @@ LABEL maintainer="Jan Wagner <waja@cyconet.org>" \
 # hadolint ignore=DL3017,DL3018
 RUN --mount=type=cache,target=/var/log \
     --mount=type=cache,target=/var/cache \
+    --mount=type=tmpfs,target=/tmp \
     <<EOF
     # Disable Dovecot TLS during installation to prevent key from being pregenerated
     mkdir -p /etc/dovecot && echo "ssl = no" > /etc/dovecot/local.conf
