@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Create a sane local.conf
 if [ ! -f /etc/dovecot/local.conf ]; then
 	cat > /etc/dovecot/local.conf << EOF
 # If you are not moving mailboxes between hosts on a daily basis you can
@@ -13,9 +14,11 @@ passdb {
 }
 EOF
 fi
+# Create needed directory
 if [ ! -d /var/lib/dovecot/sqlite ]; then
 	mkdir -p /var/lib/dovecot/sqlite
 fi
+# Create sqlite config if it does not exist
 if [ ! -f /etc/dovecot/dovecot-sqlite.conf.ext ]; then
 	cat > /etc/dovecot/dovecot-sqlite.conf.ext << EOF
 driver = sqlite
