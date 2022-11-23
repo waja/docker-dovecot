@@ -7,8 +7,8 @@ ARG BUILD_VERSION
 ARG VCS_URL
 ARG VCS_REF
 ARG VCS_BRANCH
-ARG DOVECOT_PACKAGE_VERSION=2.3.19.1-r0
-ARG SOCAT_PACKAGE_VERSION=1.7.4.3-r0
+ARG DOVECOT_PACKAGE_VERSION=2.3.19.1-r6
+ARG SOCAT_PACKAGE_VERSION=1.7.4.4-r0
 
 # See http://label-schema.org/rc1/ and https://microbadger.com/labels
 LABEL maintainer="Jan Wagner <waja@cyconet.org>" \
