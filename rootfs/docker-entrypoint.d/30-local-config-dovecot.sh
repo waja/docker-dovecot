@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# https://doc.dovecot.org/configuration_manual/authentication/proxies/#example-password-forwarding-sql-configuration
+
 # Create a sane local.conf
 if [ ! -f /etc/dovecot/local.conf ]; then
 	cat > /etc/dovecot/local.conf << EOF
