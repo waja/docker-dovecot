@@ -16,15 +16,3 @@ passdb {
 }
 EOF
 fi
-# Create needed directory
-if [ ! -d /var/lib/dovecot/sqlite ]; then
-	mkdir -p /var/lib/dovecot/sqlite
-fi
-# Create sqlite config if it does not exist
-if [ ! -f /etc/dovecot/dovecot-sqlite.conf.ext ]; then
-	cat > /etc/dovecot/dovecot-sqlite.conf.ext << EOF
-driver = sqlite
-connect = /var/lib/dovecot/sqlite/dct.db
-password_query = SELECT NULL AS password, "yes" as starttls, 'Y' as nopassword, host, destuser, 'Y' AS proxy FROM proxy WHERE user = '%u'
-EOF
-fi
