@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Create needed directory
+if [ ! -d /var/lib/dovecot/sqlite ]; then
+	mkdir -p /var/lib/dovecot/sqlite
+fi
 # https://doc.dovecot.org/configuration_manual/authentication/proxies/#example-password-forwarding-sql-configuration
 if [ ! -f /var/lib/dovecot/sqlite/dct.db ]; then
 	command -v sqlite3 || apk add sqlite

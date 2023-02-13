@@ -14,17 +14,12 @@ passdb {
   driver = sql
   args = /etc/dovecot/dovecot-sqlite.conf.ext
 }
-EOF
-fi
-# Create needed directory
-if [ ! -d /var/lib/dovecot/sqlite ]; then
-	mkdir -p /var/lib/dovecot/sqlite
-fi
-# Create sqlite config if it does not exist
-if [ ! -f /etc/dovecot/dovecot-sqlite.conf.ext ]; then
-	cat > /etc/dovecot/dovecot-sqlite.conf.ext << EOF
-driver = sqlite
-connect = /var/lib/dovecot/sqlite/dct.db
-password_query = SELECT NULL AS password, "yes" as starttls, 'Y' as nopassword, host, destuser, 'Y' AS proxy FROM proxy WHERE user = '%u'
+
+#auth_policy_request_attributes = login=%{requested_username} pwhash=%{hashed_password} remote=%{rip} device_id=%{client_id} protocol=%s
+protocols = imap lmtp sieve pop3
+#ssl = yes
+#ssl_cipher_list = ALL:!kRSA:!SRP:!kDHd:!DSS:!aNULL:!eNULL:!EXPORT:!DES:!3DES:!MD5:!PSK:!RC4:!ADH:!LOW@STRENGTH
+#ssl_min_protocol = TLSv1
+#ssl_prefer_server_ciphers = no
 EOF
 fi
