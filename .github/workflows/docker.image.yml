@@ -86,6 +86,17 @@ jobs:
         uses: docker/setup-buildx-action@v2
         with:
           driver-opts: network=host
+      # Extract metadata (tags, labels) for Docker
+      # https://github.com/docker/metadata-action
+      - name: Extract Docker metadata from ghcr.io
+        id: meta
+        if: ${{ env.GITHUB_TOKEN != '' }}
+        env:
+          REGISTRY: ghcr.io
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       - name: Build the Docker image
         id: docker_test
         uses: docker/build-push-action@v4
@@ -319,6 +330,18 @@ jobs:
             VCS_REF="$(git rev-parse --short HEAD)"
             VCS_URL="$(git config --get remote.origin.url)"
             VCS_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
+      # Extract metadata (tags, labels) for Docker
+      # https://github.com/docker/metadata-action
+      - name: Extract Docker metadata from ghcr.io
+        id: meta
+        if: ${{ env.GITHUB_TOKEN != '' }}
+        env:
+          REGISTRY: ghcr.io
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push
         id: docker_build
