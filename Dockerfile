@@ -1,14 +1,14 @@
 # syntax = docker/dockerfile:1
 # requires DOCKER_BUILDKIT=1 set when running docker build
-FROM alpine:3.17.3
+FROM alpine:3.18.0
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG VCS_URL
 ARG VCS_REF
 ARG VCS_BRANCH
-ARG DOVECOT_PACKAGE_VERSION=2.3.20-r7
-ARG SOCAT_PACKAGE_VERSION=1.7.4.4-r0
+ARG DOVECOT_PACKAGE_VERSION=2.3.20-r10
+ARG SOCAT_PACKAGE_VERSION=1.7.4.4-r1
 
 # See http://label-schema.org/rc1/ and https://microbadger.com/labels
 LABEL maintainer="Jan Wagner <waja@cyconet.org>" \
