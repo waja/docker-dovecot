@@ -159,15 +159,15 @@ jobs:
           # Just for compatibility reasons
           TEST_STRING=${CONTAINER_OUTPUT}
           if ! [ "${TEST_STRING}" = "dovecot" ]; then exit 1; fi
-#      - name: Scan image with Container Scan
-#        uses: Azure/container-scan@v0
-#        env:
-#          DOCKER_CONTENT_TRUST: 1
-#          #DOCKLE_NON_SSL: true
-#        with:
-#          image-name: localhost:5000/foobar/${{ env.IMAGE_NAME }}
-#          severity-threshold: HIGH
-#          run-quality-checks: false
+      - name: Scan image with Container Scan
+        uses: Azure/container-scan@v0
+        env:
+          DOCKER_CONTENT_TRUST: 1
+          #DOCKLE_NON_SSL: true
+        with:
+          image-name: localhost:5000/foobar/${{ env.IMAGE_NAME }}
+          severity-threshold: HIGH
+          run-quality-checks: false
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
