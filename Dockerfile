@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1
 # requires DOCKER_BUILDKIT=1 set when running docker build
-FROM alpine:3.18.2
+FROM alpine:3.18.3
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
