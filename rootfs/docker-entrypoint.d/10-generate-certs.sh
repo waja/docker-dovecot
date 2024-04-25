@@ -30,7 +30,8 @@ DOVECOT_VERSION_STRING="$(
 				PKGVER = ""
 			}
 		}
-	' /lib/apk/db/installed)"
+	' /lib/apk/db/installed
+)"
 
 # Re-run dovecot post-install script (to generate the TLS certificates if they're missing)
 tar -xf "/lib/apk/db/scripts.tar" "${DOVECOT_VERSION_STRING}.post-install" -O | sh

@@ -1,3 +1,5 @@
+# checkov:skip=CKV_DOCKER_2: no healthcheck (yet)
+# checkov:skip=CKV_DOCKER_3: no user (yet)
 # syntax = docker/dockerfile:1
 # requires DOCKER_BUILDKIT=1 set when running docker build
 FROM alpine:3.19.1
