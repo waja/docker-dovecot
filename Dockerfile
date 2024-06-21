@@ -2,7 +2,7 @@
 # checkov:skip=CKV_DOCKER_3: no user (yet)
 # syntax = docker/dockerfile:1
 # requires DOCKER_BUILDKIT=1 set when running docker build
-FROM alpine:3.20.0
+FROM alpine:3.20.1
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
