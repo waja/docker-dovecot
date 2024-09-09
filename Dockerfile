@@ -2,14 +2,14 @@
 # checkov:skip=CKV_DOCKER_3: no user (yet)
 # syntax = docker/dockerfile:1
 # requires DOCKER_BUILDKIT=1 set when running docker build
-FROM alpine:3.20.2
+FROM alpine:3.20.3
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG VCS_URL
 ARG VCS_REF
 ARG VCS_BRANCH
-ARG DOVECOT_PACKAGE_VERSION=2.3.21-r17
+ARG DOVECOT_PACKAGE_VERSION=2.3.21.1-r0
 ARG SOCAT_PACKAGE_VERSION=1.8.0.0-r0
 
 # See http://label-schema.org/rc1/ and https://microbadger.com/labels
