@@ -10,7 +10,7 @@ ARG VCS_URL
 ARG VCS_REF
 ARG VCS_BRANCH
 ARG DOVECOT_PACKAGE_VERSION=2.3.21.1-r0
-ARG SOCAT_PACKAGE_VERSION=1.8.0.1-r0
+ARG SOCAT_PACKAGE_VERSION=1.8.0.3-r0
 
 # See http://label-schema.org/rc1/ and https://microbadger.com/labels
 LABEL maintainer="Jan Wagner <waja@cyconet.org>" \
