@@ -2,15 +2,15 @@
 # requires DOCKER_BUILDKIT=1 set when running docker build
 # checkov:skip=CKV_DOCKER_2: no healthcheck (yet)
 # checkov:skip=CKV_DOCKER_3: no user (yet)
-FROM alpine:3.21.3@sha256:a8560b36e8b8210634f77d9f7f9efd7ffa463e380b75e2e74aff4511df3ef88c
+FROM alpine:3.22.0@sha256:8a1f59ffb675680d47db6337b49d22281a139e9d709335b492be023728e11715
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
 ARG VCS_URL
 ARG VCS_REF
 ARG VCS_BRANCH
-ARG DOVECOT_PACKAGE_VERSION=2.3.21.1-r0
-ARG SOCAT_PACKAGE_VERSION=1.8.0.3-r0
+ARG DOVECOT_PACKAGE_VERSION=2.4.1-r1
+ARG SOCAT_PACKAGE_VERSION=1.8.0.3-r1
 
 # See http://label-schema.org/rc1/ and https://microbadger.com/labels
 LABEL maintainer="Jan Wagner <waja@cyconet.org>" \
