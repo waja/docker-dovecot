@@ -157,14 +157,14 @@ jobs:
           CONTAINER_OUTPUT="$(docker run --rm -t localhost:5000/foobar/${{ env.IMAGE_NAME }} dovecot --help 2>&1 | grep ^Usage: | cut -d' ' -f2)"
           # Just for compatibility reasons
           TEST_STRING=${CONTAINER_OUTPUT}
-          if ! [ "${TEST_STRING}" = "dovecot" ]; then echo ${TEST_STRING} && exit 1; fi
+          if ! [ "${TEST_STRING}" = "dovecot" ]; then echo "${TEST_STRING}" && exit 1; fi
       - name: Test the Docker image for needed files
         run: |
           # shellcheck disable=SC2086
-          CONTAINER_OUTPUT="$(docker run --rm -t localhost:5000/foobar/${{ env.IMAGE_NAME }} ls -la /etc/dovecot/conf.d/10-{logging,auth,ssl}.conf /etc/dovecot/local.conf  | grep ^ls:)"
+          CONTAINER_OUTPUT="$(docker run --rm -t localhost:5000/foobar/${{ env.IMAGE_NAME }} ls -la /etc/dovecot/conf.d/10-{logging,auth,ssl}.conf /etc/dovecot/local.conf | grep ^ls: || true)"
           # Just for compatibility reasons
-          TEST_STRING="$(echo ${CONTAINER_OUTPUT} | wc -l)"
-          if ! [ "${TEST_STRING}" -gt 0 ]; then echo ${CONTAINER_OUTPUT} && exit 1; fi
+          TEST_STRING=${CONTAINER_OUTPUT}
+          if [ -n "${TEST_STRING}" ]; then echo "${TEST_STRING}" && exit 1; fi
   dockle:
     name: Run Dockle tests
     needs:
