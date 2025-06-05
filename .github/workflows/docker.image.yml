@@ -157,7 +157,7 @@ jobs:
           CONTAINER_OUTPUT="$(docker run --rm -t localhost:5000/foobar/${{ env.IMAGE_NAME }} dovecot --help 2>&1 | grep ^Usage: | cut -d' ' -f2)"
           # Just for compatibility reasons
           TEST_STRING=${CONTAINER_OUTPUT}
-          if ! [ "${TEST_STRING}" = "dovecot" ]; then exit 1; fi
+          if ! [ "${TEST_STRING}" = "dovecot" ]; then echo ${TEST_STRING} && exit 1; fi
   dockle:
     name: Run Dockle tests
     needs:
