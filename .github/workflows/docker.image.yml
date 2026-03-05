@@ -86,7 +86,7 @@ jobs:
         env:
           REGISTRY: ghcr.io
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
       - name: Build the Docker image
@@ -415,7 +415,7 @@ jobs:
         env:
           REGISTRY: ghcr.io
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
