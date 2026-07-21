@@ -141,11 +141,17 @@ jobs:
           docker buildx imagetools inspect localhost:5000/foobar/${{ env.IMAGE_NAME }}
       - name: Test the Docker image
         run: |
-          # shellcheck disable=SC2086
-          CONTAINER_OUTPUT="$(docker run --rm -t localhost:5000/foobar/${{ env.IMAGE_NAME }} dovecot --help 2>&1 | grep ^Usage: | cut -d' ' -f2)"
-          # Just for compatibility reasons
-          TEST_STRING=${CONTAINER_OUTPUT}
-          if ! [ "${TEST_STRING}" = "dovecot" ]; then echo "${TEST_STRING}" && exit 1; fi
+          CONTAINER_OUTPUT=$(docker run --rm localhost:5000/foobar/${{ env.IMAGE_NAME }} dovecot --help 2>&1 | grep ^Usage)
+          echo "Container output: $CONTAINER_OUTPUT"
+          echo "Container output (quoted): '$CONTAINER_OUTPUT'"
+
+          TEST_STRING=$(echo "${CONTAINER_OUTPUT}" | head -1 | cut -d' ' -f2)
+          echo "Extracted test string: '$TEST_STRING'"
+
+          if ! [ "${TEST_STRING}" = "dovecot" ]; then
+            echo "ERROR: Expected 'dovecot' but got '$TEST_STRING'"
+            exit 1
+          fi
       - name: Test the Docker image for needed files
         run: |
           # shellcheck disable=SC2086
