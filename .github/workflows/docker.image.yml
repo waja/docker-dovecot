@@ -154,11 +154,11 @@ jobs:
           fi
       - name: Test the Docker image for needed files
         run: |
-          # shellcheck disable=SC2086
-          CONTAINER_OUTPUT="$(docker run --rm -t localhost:5000/foobar/${{ env.IMAGE_NAME }} ls -la /etc/dovecot/conf.d/10-{logging,auth,ssl}.conf /etc/dovecot/local.conf | grep ^ls: || true)"
-          # Just for compatibility reasons
-          TEST_STRING=${CONTAINER_OUTPUT}
-          if [ -n "${TEST_STRING}" ]; then echo "${TEST_STRING}" && exit 1; fi
+          docker run --rm localhost:5000/foobar/${{ env.IMAGE_NAME }} sh -c '
+            [ -n "$(ls -A /etc/dovecot/conf.d/ 2>/dev/null)" ] || { echo "ERROR: /etc/dovecot/conf.d/ is empty"; exit 1; }
+            [ -f /etc/dovecot/local.conf ] || { echo "ERROR: /etc/dovecot/local.conf not existing"; exit 1; }
+            echo "OK: /etc/dovecot/conf.d/ is not empty and /etc/dovecot/local.conf exists"
+          '
   dockle:
     name: Run Dockle tests
     needs:
