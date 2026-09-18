@@ -2,7 +2,7 @@
 # requires DOCKER_BUILDKIT=1 set when running docker build
 # checkov:skip=CKV_DOCKER_2: no healthcheck (yet)
 # checkov:skip=CKV_DOCKER_3: no user (yet)
-FROM alpine:3.21.7@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d
+FROM alpine:3.21.8@sha256:63bbf8773c482b18b185e38b5dec833cf3b06657f28d42ccbed50fd652e13145
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
